@@ -6,5 +6,7 @@
         <attr name="vumeter_speed" format="integer"/>
         <attr name="vumeter_stopSize" format="dimension"/>
         <attr name="vumeter_startOff" format="boolean"/>
+        <attr name="vumeter_isFlipped" format="boolean"/>
+        <attr name="vumeter_blockMaxHeight" format="float"/>
     </declare-styleable>
 </resources>

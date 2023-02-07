@@ -26,6 +26,8 @@ public class VuMeterView extends View {
     public static final int DEFAULT_BLOCK_SPACING = 20;
     public static final int DEFAULT_SPEED = 10;
     public static final int DEFAULT_STOP_SIZE = 30;
+    public static final float DEFAULT_BLOCK_MAX_HEIGHT = 1.0f;
+    public static final boolean DEFAULT_IS_FLIPPED = false;
     public static final boolean DEFAULT_START_OFF = false;
     public static final int FPS = 60;
 
@@ -38,6 +40,8 @@ public class VuMeterView extends View {
     private float mBlockSpacing;
     private int mSpeed;
     private float mStopSize;
+    private float mBlockMaxHeight;
+    private boolean mIsFlipped;
 
     private Paint mPaint = new Paint();
     private Random mRandom = new Random();
@@ -83,6 +87,8 @@ public class VuMeterView extends View {
         mBlockSpacing = a.getDimension(R.styleable.vumeter_VuMeterView_vumeter_blockSpacing, DEFAULT_BLOCK_SPACING);
         mSpeed = a.getInt(R.styleable.vumeter_VuMeterView_vumeter_speed, DEFAULT_SPEED);
         mStopSize = a.getDimension(R.styleable.vumeter_VuMeterView_vumeter_stopSize, DEFAULT_STOP_SIZE);
+        mBlockMaxHeight = a.getFloat(R.styleable.vumeter_VuMeterView_vumeter_blockMaxHeight, DEFAULT_BLOCK_MAX_HEIGHT);
+        mIsFlipped = a.getBoolean(R.styleable.vumeter_VuMeterView_vumeter_isFlipped, DEFAULT_IS_FLIPPED);
         boolean startOff = a.getBoolean(R.styleable.vumeter_VuMeterView_vumeter_startOff, DEFAULT_START_OFF);
         a.recycle();
 
@@ -105,6 +111,14 @@ public class VuMeterView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        if (mIsFlipped) {
+            this.setScaleY(-1f);
+        }
+        else {
+            this.setScaleY(1f);
+        }
+
         mPaddingLeft = getPaddingLeft();
         mPaddingTop = getPaddingTop();
         mPaddingRight = getPaddingRight();
@@ -138,7 +152,7 @@ public class VuMeterView extends View {
             mRight = mLeft + mBlockWidth;
 
             if (mDestinationValues[mBlockPass] == null) {
-                pickNewDynamics(mContentHeight, mContentHeight * mBlockValues[mBlockPass][mDrawPass]);
+                pickNewDynamics((int) (mContentHeight * ((float) mBlockPass / mBlockNumber)), mContentHeight * mBlockValues[mBlockPass][mDrawPass]);
             }
 
             if (mDestinationValues[mBlockPass].isAtRest() && mState == STATE_PLAYING) {
@@ -147,7 +161,21 @@ public class VuMeterView extends View {
                 mDestinationValues[mBlockPass].update();
             }
 
-            mTop = mPaddingTop + (int) (mDestinationValues[mBlockPass].getPosition());
+            int blockNum = mBlockPass;
+            int totalBlockNum = mBlockNumber - 1;
+
+            if ((float) blockNum / mBlockNumber < 0.5)
+            {
+                mTop = (int) (mPaddingTop + (int) (mDestinationValues[mBlockPass].getPosition()) + ((mContentHeight - mDestinationValues[mBlockPass].getPosition()) * (1 - (mBlockMaxHeight * ((float) blockNum / ((float) totalBlockNum / 2))))));
+            }
+            else if ((float) blockNum / mBlockNumber > 0.5)
+            {
+                mTop = (int) (mPaddingTop + (int) (mDestinationValues[mBlockPass].getPosition()) + ((mContentHeight - mDestinationValues[mBlockPass].getPosition()) * (1 - (mBlockMaxHeight * (1 - ((blockNum - ((float) totalBlockNum / 2)) / (totalBlockNum - ((float) (totalBlockNum) / 2))))))));
+            }
+            else
+            {
+                mTop = (int) (mPaddingTop + (int) (mDestinationValues[mBlockPass].getPosition()) + ((mContentHeight - mDestinationValues[mBlockPass].getPosition()) * (1 - mBlockMaxHeight)));
+            }
 
             canvas.drawRect(
                     mLeft,
@@ -155,7 +183,19 @@ public class VuMeterView extends View {
                     mRight,
                     mContentHeight,
                     mPaint);
+            canvas.drawCircle(
+                    (float) (mLeft + (mBlockWidth / 2.0)),
+                    mTop,
+                    (float) (mBlockWidth / 2.0),
+                    mPaint);
+            canvas.drawCircle(
+                    (float) (mLeft + (mBlockWidth / 2.0)),
+                    mContentHeight,
+                    (float) (mBlockWidth / 2.0),
+                    mPaint);
         }
+
+
 
         this.postInvalidateDelayed(1000 / FPS);
     }
@@ -295,6 +335,25 @@ public class VuMeterView extends View {
      */
     public void setSpeed(int speed) {
         mSpeed = speed;
+    }
+
+    public float getBlockMaxHeight() {
+        return mBlockMaxHeight;
+    }
+
+    public void setBlockMaxHeight(float maxHeight) {
+        if ((maxHeight < 0) || (maxHeight > 1.0)) {
+            throw new IllegalArgumentException();
+        }
+        mBlockMaxHeight = maxHeight;
+    }
+
+    public boolean getIsFlipped() {
+        return mIsFlipped;
+    }
+
+    public void setIsFlipped(boolean flip) {
+        mIsFlipped = flip;
     }
 
     /**

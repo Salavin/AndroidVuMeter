@@ -34,13 +34,25 @@
         android:text="@string/enable_animation"
         tools:targetApi="ice_cream_sandwich"/>
 
+    <Switch
+        android:id="@+id/flippedSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/barNumberSwitch"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="35dp"
+        android:text="@string/enable_flipped"
+        tools:targetApi="ice_cream_sandwich"/>
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/numberSeekBar"
+        android:layout_alignTop="@+id/flippedSwitch"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="8dp"
@@ -52,9 +64,32 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/barNumberSwitch"
+        android:layout_below="@+id/flippedSwitch"
         android:layout_toEndOf="@+id/textView"
         android:layout_toRightOf="@+id/textView"
+        android:progress="5"/>
+
+    <TextView
+        android:id="@+id/textMaxBarHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textView"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/max_height"/>
+
+    <SeekBar
+        android:id="@+id/numberMaxHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/numberSeekBar"
+        android:layout_toEndOf="@+id/textMaxBarHeight"
+        android:layout_toRightOf="@+id/textMaxBarHeight"
         android:progress="5"/>
 
 </RelativeLayout>

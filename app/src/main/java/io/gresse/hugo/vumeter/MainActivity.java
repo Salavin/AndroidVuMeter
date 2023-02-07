@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     private SeekBar mBarNumberSeekBar;
     private Switch mAnimationSwitch;
+    private Switch mFlippedSwitch;
+    private SeekBar mMaxHeightBar;
 
     private boolean mEnableAnimation;
 
@@ -26,10 +28,15 @@ public class MainActivity extends AppCompatActivity {
         mVuMeterView = (VuMeterView) findViewById(R.id.vumeter);
         mBarNumberSeekBar = (SeekBar) findViewById(R.id.numberSeekBar);
         mAnimationSwitch = (Switch) findViewById(R.id.barNumberSwitch);
+        mFlippedSwitch = (Switch) findViewById(R.id.flippedSwitch);
+        mMaxHeightBar = (SeekBar) findViewById(R.id.numberMaxHeight);
 
 
         mBarNumberSeekBar.incrementProgressBy(1);
         mBarNumberSeekBar.setMax(10);
+
+        mMaxHeightBar.incrementProgressBy(1);
+        mMaxHeightBar.setMax(10);
 
         mBarNumberSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -48,6 +55,26 @@ public class MainActivity extends AppCompatActivity {
         mAnimationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mEnableAnimation = isChecked;
+            }
+        });
+
+        mFlippedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mVuMeterView.setIsFlipped(isChecked);
+            }
+        });
+
+        mMaxHeightBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mVuMeterView.setBlockMaxHeight((float) (progress / 10.0));
             }
         });
     }
