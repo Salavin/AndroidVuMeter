@@ -80,4 +80,11 @@ public class Dynamics {
         return mTargetPosition;
     }
 
+    public int getSpeed() {
+        return mStep;
+    }
+
+    public void setSpeed(int speed) {
+        mStep = speed;
+    }
 }

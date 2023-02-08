@@ -4,11 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidVuMeter.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidVuMeter.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidVuMeter.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidVuMeter.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidVuMeter.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidVuMeter.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidVuMeter.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidVuMeter.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidVuMeter.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidVuMeter.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/vumeterlibrary/AndroidVuMeter.vumeterlibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/vumeterlibrary/AndroidVuMeter.vumeterlibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/vumeterlibrary/AndroidVuMeter.vumeterlibrary.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/vumeterlibrary/AndroidVuMeter.vumeterlibrary.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/vumeterlibrary/AndroidVuMeter.vumeterlibrary.main.iml" filepath="$PROJECT_DIR$/.idea/modules/vumeterlibrary/AndroidVuMeter.vumeterlibrary.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/vumeterlibrary/AndroidVuMeter.vumeterlibrary.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/vumeterlibrary/AndroidVuMeter.vumeterlibrary.unitTest.iml" />
     </modules>

@@ -43,8 +43,8 @@ public class VuMeterView extends View {
     private float mBlockMaxHeight;
     private boolean mIsFlipped;
 
-    private Paint mPaint = new Paint();
-    private Random mRandom = new Random();
+    private final Paint mPaint = new Paint();
+    private final Random mRandom = new Random();
 
     private int mState;
 
@@ -153,6 +153,8 @@ public class VuMeterView extends View {
 
             if (mDestinationValues[mBlockPass] == null) {
                 pickNewDynamics((int) (mContentHeight * ((float) mBlockPass / mBlockNumber)), mContentHeight * mBlockValues[mBlockPass][mDrawPass]);
+            } else if (mDestinationValues[mBlockPass].getSpeed() != mSpeed) {
+                mDestinationValues[mBlockPass].setSpeed(mSpeed);
             }
 
             if (mDestinationValues[mBlockPass].isAtRest() && mState == STATE_PLAYING) {
@@ -161,8 +163,8 @@ public class VuMeterView extends View {
                 mDestinationValues[mBlockPass].update();
             }
 
-            int blockNum = mBlockPass;
-            int totalBlockNum = mBlockNumber - 1;
+            int blockNum = mBlockPass + 1;
+            int totalBlockNum = mBlockNumber;
 
             if ((float) blockNum / mBlockNumber < 0.5)
             {
@@ -170,7 +172,7 @@ public class VuMeterView extends View {
             }
             else if ((float) blockNum / mBlockNumber > 0.5)
             {
-                mTop = (int) (mPaddingTop + (int) (mDestinationValues[mBlockPass].getPosition()) + ((mContentHeight - mDestinationValues[mBlockPass].getPosition()) * (1 - (mBlockMaxHeight * (1 - ((blockNum - ((float) totalBlockNum / 2)) / (totalBlockNum - ((float) (totalBlockNum) / 2))))))));
+                mTop = (int) (mPaddingTop + (int) (mDestinationValues[mBlockPass].getPosition()) + ((mContentHeight - mDestinationValues[mBlockPass].getPosition()) * (1 - (mBlockMaxHeight * (1 - ((blockNum - ((float) totalBlockNum / 2)) / (totalBlockNum - ((float) (totalBlockNum - 1) / 2))))))));
             }
             else
             {
